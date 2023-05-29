@@ -11,17 +11,18 @@ use Laravel\Socialite\Facades\Socialite;
 
 class AuthGoogleController extends Controller
 {
-	public function redirectToGoogleProvider(): RedirectResponse
+	public function redirectToGoogleProvider(): JsonResponse
 	{
-		return Socialite::driver('google')->stateless()->redirect();
+		$url = Socialite::driver('google')->stateless()->redirect()->getTargetUrl();
+		return response()->json(['url' => $url]);
 	}
 
-	public function handleCallback(): JsonResponse
+	public function handleCallback(): RedirectResponse
 	{
 		try {
 			$user = Socialite::driver('google')->stateless()->user();
 		} catch (\Exception $exception) {
-			return response()->json(['message' => 'Authentication failed'], 500);
+			return redirect(env('FRONTEND_URL'));
 		}
 
 		$existingUser = User::where('google_id', $user->id)->first();
@@ -38,8 +39,6 @@ class AuthGoogleController extends Controller
 			Auth::login($newUser, true);
 		}
 
-		session()->regenerate();
-
-		return response()->json(['message' => 'Authentication successful'], 200);
+		return redirect(env('FRONTEND_URL') . '/newsfeed');
 	}
 }
