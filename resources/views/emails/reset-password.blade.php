@@ -26,7 +26,7 @@
             <br>
             <br>
             <p style="margin: 40px 0">If clicking doesn't work, you can try copying and pasting it to your browser:</p>
-            <p style="margin: 0; word-break: break-all; color:  #DDCCAA;">{{ env('FRONT_URL') . '/password/reset/' . $token }}</p>
+            <p style="margin: 0; word-break: break-all; color:  #DDCCAA;">{{ env('FRONTEND_URL') . '/password/reset/' . $token }}</p>
             <br>
             <p style="margin: 40px 0 0 0">If you have any problems, please contact us: support@moviequotes.ge</p>
             <p style="margin: 30px 0;">MovieQuotes Crew</p>
