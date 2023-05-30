@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 /**
@@ -17,12 +18,21 @@ class UserFactory extends Factory
 	 */
 	public function definition(): array
 	{
+		// Check if the directory exists and create it if it does not.
+		if (!File::exists('public/storage/users/pictures')) {
+			File::makeDirectory('public/storage/users/pictures', $mode = 0755, true, true);
+		}
+
+		$image = \Faker\Factory::create()->image('public/storage/users/pictures');
+
 		return [
-			'name'              => fake()->name(),
-			'email'             => fake()->unique()->safeEmail(),
-			'email_verified_at' => now(),
-			'password'          => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-			'remember_token'    => Str::random(10),
+			'username'                 => fake()->name(),
+			'email'                    => fake()->unique()->safeEmail(),
+			'email_verification_token' => Str::uuid()->toString(),
+			'email_verified_at'        => now(),
+			'password'                 => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+			'profile_picture'          => 'pictures/' . basename($image),
+			'remember_token'           => Str::random(10),
 		];
 	}
 
