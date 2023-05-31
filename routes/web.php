@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthGoogleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 	return view('welcome');
+});
+
+// auth with Google
+Route::controller(AuthGoogleController::class)->prefix('oauth/google')->group(function () {
+	Route::get('redirect', 'redirectToGoogleProvider')->name('google.redirect');
+	Route::get('callback', 'handleCallback')->name('google.callback');
 });
