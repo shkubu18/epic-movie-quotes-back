@@ -4,6 +4,8 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Http\Controllers\MovieController;
+use App\Http\Controllers\GenreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,4 +37,16 @@ Route::controller(ResetPasswordController::class)->prefix('password')->group(fun
 Route::middleware('auth:sanctum')->group(function () {
 	// logout
 	Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+	// movies
+	Route::controller(MovieController::class)->prefix('movies')->group(function () {
+		Route::get('/', 'index')->name('movies.index');
+		Route::post('/', 'store')->name('movies.store');
+		Route::get('{movie}/edit', 'get')->name('movies.edit');
+		Route::post('{movie}', 'update')->name('movies.update');
+		Route::delete('/{movie}', 'destroy')->name('movies.destroy');
+	});
+
+	// genres
+	Route::get('genres', [GenreController::class, 'get'])->name('genres.get');
 });
