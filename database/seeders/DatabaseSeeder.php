@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use App\Models\Genre;
 use App\Models\Movie;
 use App\Models\MovieGenre;
+use App\Models\Quote;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
 		Genre::factory(15)->create();
 		Movie::factory(10)->create();
 		MovieGenre::factory(15)->create();
+		Quote::factory(15)->create();
 
 		// \App\Models\User::factory()->create([
 		//     'name' => 'Test User',
