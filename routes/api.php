@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\GenreController;
+use App\Http\Controllers\QuoteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,4 +50,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
 	// genres
 	Route::get('genres', [GenreController::class, 'get'])->name('genres.get');
+
+	// quotes
+	Route::controller(QuoteController::class)->prefix('quotes')->group(function () {
+		Route::get('/', 'index')->name('quotes.index');
+		Route::post('/', 'store')->name('quotes.store');
+		Route::get('{quote}/edit', 'get')->name('quotes.edit');
+		Route::post('{quote}', 'update')->name('quotes.update');
+		Route::delete('/{quote}', 'destroy')->name('quotes.destroy');
+	});
 });
