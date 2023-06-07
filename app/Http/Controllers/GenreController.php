@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\GenreResource;
 use App\Models\Genre;
-use Illuminate\Http\JsonResponse;
 
 class GenreController extends Controller
 {
-	public function get(): JsonResponse
+	public function get(): array
 	{
-		return response()->json(['genres' => Genre::all()], 200);
+		return ['genres' => GenreResource::collection(Genre::all())];
 	}
 }
