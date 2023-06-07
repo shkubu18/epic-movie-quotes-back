@@ -10,11 +10,11 @@ use Illuminate\Http\JsonResponse;
 
 class QuoteController extends Controller
 {
-	public function index(): JsonResponse
+	public function index(): array
 	{
 		$quotes = Quote::with('movie')->latest()->paginate(3);
 
-		return response()->json(['quotes' => QuoteResource::collection($quotes), 'last_page' => $quotes->lastPage()]);
+		return ['quotes' => QuoteResource::collection($quotes), 'last_page' => $quotes->lastPage()];
 	}
 
 	public function store(StoreQuoteRequest $request): JsonResponse
@@ -28,11 +28,11 @@ class QuoteController extends Controller
 		return response()->json(['message' => 'quote created successfully'], 201);
 	}
 
-	public function get(Quote $quote): JsonResponse
+	public function get(Quote $quote): array
 	{
 		$this->authorize('authorizeQuoteAccess', $quote);
 
-		return response()->json(['quote'  => QuoteResource::make($quote)]);
+		return ['quote'  => QuoteResource::make($quote)];
 	}
 
 	public function update(UpdateQuoteRequest $request, Quote $quote): JsonResponse
