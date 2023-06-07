@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegistrationRequest;
+use App\Http\Resources\UserResource;
 use App\Mail\EmailVerification;
 use App\Models\User;
 use App\Services\AuthService;
@@ -28,7 +29,10 @@ class AuthController extends Controller
 
 				session()->regenerate();
 
-				return response()->json(['message' => 'authorization successfully', 'user' => Auth::user()], 200);
+				return response()->json([
+					'message' => 'authorization successfully',
+					'user'    => UserResource::make(Auth::user()),
+				], 200);
 			} else {
 				return response()->json(['message' => 'Your provided credentials could not be verified'], 422);
 			}
