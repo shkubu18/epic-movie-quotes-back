@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Movie\StoreMovieRequest;
 use App\Http\Requests\Movie\UpdateMovieRequest;
+use App\Http\Resources\MovieResource;
 use App\Models\Movie;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class MovieController extends Controller
 {
-	public function index(): JsonResponse
+	public function index(): array
 	{
 		$movies = Movie::where('user_id', Auth::user()->id)->latest()->get();
 
@@ -19,7 +20,7 @@ class MovieController extends Controller
 			return response()->json(['message' => 'no movies found'], 204);
 		}
 
-		return response()->json(['movies' => $movies], 200);
+		return ['movies' => MovieResource::collection($movies)];
 	}
 
 	public function store(StoreMovieRequest $request): JsonResponse
@@ -40,11 +41,11 @@ class MovieController extends Controller
 		}
 	}
 
-	public function get(Movie $movie): JsonResponse
+	public function get(Movie $movie): array
 	{
 		$this->authorize('authorizeMovieAccess', $movie);
 
-		return response()->json(['movie'  => $movie, 'genres' => $movie->genres->pluck('name')->toArray()], 200);
+		return ['movie'  => MovieResource::make($movie)];
 	}
 
 	public function update(UpdateMovieRequest $request, Movie $movie): JsonResponse
