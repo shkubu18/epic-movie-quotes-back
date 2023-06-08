@@ -26,6 +26,7 @@ class QuoteResource extends JsonResource
 				'name'    => $this->movie->user->username,
 				'picture' => $this->movie->user->profile_picture,
 			],
+			'comments' => CommentResource::collection($this->comments),
 		];
 	}
 }

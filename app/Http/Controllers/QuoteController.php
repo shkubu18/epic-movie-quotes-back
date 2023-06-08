@@ -12,7 +12,7 @@ class QuoteController extends Controller
 {
 	public function index(): array
 	{
-		$quotes = Quote::with('movie')->latest()->paginate(3);
+		$quotes = Quote::with('movie', 'comments')->latest()->paginate(3);
 
 		return ['quotes' => QuoteResource::collection($quotes), 'last_page' => $quotes->lastPage()];
 	}

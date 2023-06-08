@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\EmailVerificationController;
@@ -59,4 +60,7 @@ Route::middleware('auth:sanctum')->group(function () {
 		Route::post('{quote}', 'update')->name('quotes.update');
 		Route::delete('/{quote}', 'destroy')->name('quotes.destroy');
 	});
+
+	// comments
+	Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 });
