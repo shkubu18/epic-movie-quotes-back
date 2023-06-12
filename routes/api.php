@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LikeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\EmailVerificationController;
@@ -63,4 +64,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 	// comments
 	Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+
+	// likes
+	Route::post('/likes', [LikeController::class, 'like'])->name('like');
 });

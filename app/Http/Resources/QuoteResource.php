@@ -26,7 +26,8 @@ class QuoteResource extends JsonResource
 				'name'    => $this->movie->user->username,
 				'picture' => $this->movie->user->profile_picture,
 			],
-			'comments' => CommentResource::collection($this->comments),
+			'comments'       => $this->when($this->comments->isNotEmpty(), CommentResource::collection($this->comments)),
+			'total_likes'    => $this->when($this->likes->isNotEmpty(), $this->likes->count()),
 		];
 	}
 }
