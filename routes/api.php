@@ -1,14 +1,16 @@
 <?php
 
-use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\LikeController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\EmailVerificationController;
-use App\Http\Controllers\MovieController;
-use App\Http\Controllers\GenreController;
-use App\Http\Controllers\QuoteController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Movies\GenreController;
+use App\Http\Controllers\Movies\MovieController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\Quotes\CommentController;
+use App\Http\Controllers\Quotes\LikeController;
+use App\Http\Controllers\Quotes\QuoteController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,8 @@ Route::controller(ResetPasswordController::class)->prefix('password')->group(fun
 });
 
 Route::middleware('auth:sanctum')->group(function () {
+	Route::get('/user', [UserController::class, 'getUser'])->name('user');
+
 	// logout
 	Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -67,4 +71,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
 	// likes
 	Route::post('/likes', [LikeController::class, 'like'])->name('like');
+
+	// notifications
+	Route::controller(NotificationController::class)->prefix('notifications')->group(function () {
+		Route::get('/', 'index')->name('notifications.index');
+		Route::post('/{notification}/mark-as-read', 'markAsRead')->name('notifications.mark_as_read');
+		Route::delete('/{notification}', 'destroy')->name('notifications.destroy');
+	});
 });
