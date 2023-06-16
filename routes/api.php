@@ -1,16 +1,16 @@
 <?php
 
-use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\LikeController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\EmailVerificationController;
-use App\Http\Controllers\MovieController;
-use App\Http\Controllers\GenreController;
-use App\Http\Controllers\QuoteController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Movies\GenreController;
+use App\Http\Controllers\Movies\MovieController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\Quotes\CommentController;
+use App\Http\Controllers\Quotes\LikeController;
+use App\Http\Controllers\Quotes\QuoteController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------

@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Quotes;
 
 use App\Events\Likes\LikeAdded;
 use App\Events\Likes\LikeRemoved;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Like\LikeRequest;
 use App\Models\Like;
 use App\Services\NotificationService;

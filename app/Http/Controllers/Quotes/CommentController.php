@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Quotes;
 
 use App\Events\CommentAdded;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Comment\StoreCommentRequest;
 use App\Models\Comment;
 use App\Services\NotificationService;

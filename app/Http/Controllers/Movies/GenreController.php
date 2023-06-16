@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Movies;
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\GenreResource;
 use App\Models\Genre;
 
