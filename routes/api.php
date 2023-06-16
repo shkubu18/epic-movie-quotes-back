@@ -3,6 +3,8 @@
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\EmailVerificationController;
@@ -38,6 +40,8 @@ Route::controller(ResetPasswordController::class)->prefix('password')->group(fun
 });
 
 Route::middleware('auth:sanctum')->group(function () {
+	Route::get('/user', [UserController::class, 'getUser'])->name('user');
+
 	// logout
 	Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -67,4 +71,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
 	// likes
 	Route::post('/likes', [LikeController::class, 'like'])->name('like');
+
+	// notifications
+	Route::controller(NotificationController::class)->prefix('notifications')->group(function () {
+		Route::get('/', 'index')->name('notifications.index');
+		Route::post('/{notification}/mark-as-read', 'markAsRead')->name('notifications.mark_as_read');
+		Route::delete('/{notification}', 'destroy')->name('notifications.destroy');
+	});
 });
