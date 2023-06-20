@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\DB;
 
 class MovieController extends Controller
 {
-	public function index(): array
+	public function index(): array|JsonResponse
 	{
 		$movies = Movie::where('user_id', Auth::user()->id)->latest()->get();
 
 		if ($movies->isEmpty()) {
-			return response()->json(['message' => 'no movies found'], 204);
+			return response()->json(['message' => __('messages.movies_not_found')], 204);
 		}
 
 		return ['movies' => MovieResource::collection($movies)];
@@ -37,8 +37,8 @@ class MovieController extends Controller
 			$movie->genres()->attach($request->genres, ['created_at' => now(), 'updated_at' => now()]);
 
 			return response()->json(['message' => 'movie created successfully'], 201);
-		} catch (\Exception $e) {
-			return response()->json(['message' => 'failed to create movie. Please try again later.'], 500);
+		} catch (\Exception) {
+			return response()->json(['message' => __('messages.failed_to_create_movie')], 500);
 		}
 	}
 
@@ -66,7 +66,7 @@ class MovieController extends Controller
 
 			return response()->json(['message' => 'movie updated successfully'], 200);
 		} catch (\Exception $e) {
-			return response()->json(['message' => 'failed to update movie. please try again later.'], 500);
+			return response()->json(['message' => __('messages.failed_to_update_movie')], 500);
 		}
 	}
 

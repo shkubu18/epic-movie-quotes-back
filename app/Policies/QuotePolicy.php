@@ -12,13 +12,13 @@ class QuotePolicy
 	{
 		return $user->id === $quote->movie->user_id
 			? Response::allow()
-			: Response::deny("You don't own this quote.");
+			: Response::deny(__('messages.quote_access'));
 	}
 
 	public function create(User $user, $movieId): Response
 	{
 		return $user->movies()->where('id', $movieId)->exists()
 			? Response::allow()
-			: Response::deny("You don't own the movie you chose.");
+			: Response::deny(__('messages.movie_access'));
 	}
 }

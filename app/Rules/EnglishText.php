@@ -6,6 +6,10 @@ use Illuminate\Contracts\Validation\Rule;
 
 class EnglishText implements Rule
 {
+	public function __construct(public string $attributeName)
+	{
+	}
+
 	/**
 	 * Determine if the validation rule passes.
 	 *
@@ -26,6 +30,6 @@ class EnglishText implements Rule
 	 */
 	public function message()
 	{
-		return 'The :attribute field must contains english letters and only following special characters: .,!-_?:;\'" ';
+		return __('letters.english_letters', ['attribute' => $this->attributeName]);
 	}
 }

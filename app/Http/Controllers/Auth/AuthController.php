@@ -19,25 +19,21 @@ class AuthController extends Controller
 {
 	public function login(LoginRequest $request): JsonResponse
 	{
-		try {
-			$user = User::where($request->login_type, $request->username_or_email)->first();
+		$user = User::where($request->login_type, $request->username_or_email)->first();
 
-			if ($user && Hash::check($request->password, $user->password)) {
-				Auth::login($user, $request->remember);
+		if ($user && Hash::check($request->password, $user->password)) {
+			Auth::login($user, $request->remember);
 
-				AuthService::checkEmailVerification($request);
+			AuthService::checkEmailVerification($request);
 
-				session()->regenerate();
+			session()->regenerate();
 
-				return response()->json([
-					'message' => 'authorization successfully',
-					'user'    => UserResource::make(Auth::user()),
-				], 200);
-			} else {
-				return response()->json(['message' => 'Your provided credentials could not be verified'], 422);
-			}
-		} catch (\Exception $e) {
-			return response()->json(['message' => 'authorization failed'], 403);
+			return response()->json([
+				'message' => 'authorization successfully',
+				'user'    => UserResource::make(Auth::user()),
+			], 200);
+		} else {
+			return response()->json(['message' => __('auth.incorrect_credentials')], 422);
 		}
 	}
 
@@ -58,7 +54,7 @@ class AuthController extends Controller
 			Mail::to($user->email)->send(new EmailVerification($verificationUrl, $user->username));
 		} catch (\Exception $e) {
 			$user->delete();
-			return response()->json(['message' => 'failed to send email verification link'], 500);
+			return response()->json(['message' => __('email.sending_failed')], 500);
 		}
 
 		return response()->json(['message' => 'user created successfully'], 201);
