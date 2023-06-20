@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Movies\GenreController;
 use App\Http\Controllers\Movies\MovieController;
 use App\Http\Controllers\NotificationController;
@@ -38,6 +39,9 @@ Route::controller(ResetPasswordController::class)->prefix('password')->group(fun
 	Route::get('reset/{token}', 'showResetPasswordForm')->name('password.reset');
 	Route::post('update', 'updatePassword')->name('password.update');
 });
+
+// language
+Route::get('locale/{language}', [LanguageController::class, 'setLocale'])->name('locale');
 
 Route::middleware('auth:sanctum')->group(function () {
 	Route::get('/user', [UserController::class, 'getUser'])->name('user');
