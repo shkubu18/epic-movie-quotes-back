@@ -20,7 +20,7 @@ class ResetPasswordController extends Controller
 		$existingEmail = DB::table('password_reset_tokens')->where('email', $request->email)->first();
 
 		if ($existingEmail) {
-			return response()->json(['message' => 'reset password email is already sent'], 402);
+			return response()->json(['message' => __('password.already_sent')], 402);
 		}
 
 		$token = Str::random(64);
@@ -37,7 +37,7 @@ class ResetPasswordController extends Controller
 			Mail::to($request->email)->send(new ResetPassword($token, $user->username));
 		} catch (\Exception $e) {
 			DB::table('password_reset_tokens')->delete();
-			return response()->json(['message' => 'failed to send reset password email'], 500);
+			return response()->json(['message' => __('password.sending_failed')], 500);
 		}
 
 		return response()->json(['message' => 'email sent successfully'], 200);

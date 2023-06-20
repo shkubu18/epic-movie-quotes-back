@@ -12,6 +12,6 @@ class MoviePolicy
 	{
 		return $user->id === $movie->user_id
 			? Response::allow()
-			: Response::deny('You do not own this movie.');
+			: Response::deny(__('messages.movie_access'));
 	}
 }

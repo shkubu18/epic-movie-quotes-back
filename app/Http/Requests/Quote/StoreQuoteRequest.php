@@ -12,8 +12,8 @@ class StoreQuoteRequest extends FormRequest
 	public function rules(): array
 	{
 		return [
-			'name_en'         => ['required', new EnglishText],
-			'name_ka'         => ['required', new GeorgianText],
+			'name_en'         => ['required', new EnglishText(__('quotes.name_in_english'))],
+			'name_ka'         => ['required', new GeorgianText(__('quotes.name_in_georgian'))],
 			'name'            => 'array',
 			'movie_id'        => ['required', Rule::exists('movies', 'id')],
 			'picture'         => 'required|image',
@@ -23,8 +23,8 @@ class StoreQuoteRequest extends FormRequest
 	public function attributes(): array
 	{
 		return [
-			'name_en'        => 'Name in English',
-			'name_ka'        => 'Name in Georgian',
+			'name_en'        => __('quotes.name_in_english'),
+			'name_ka'        => __('quotes.name_in_georgian'),
 		];
 	}
 
