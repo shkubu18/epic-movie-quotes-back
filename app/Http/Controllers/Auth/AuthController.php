@@ -14,6 +14,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -48,10 +49,10 @@ class AuthController extends Controller
 	{
 		$user = User::create($request->validated());
 
-		$verificationUrl = VerificationUrlService::generate($user);
+		$verificationToken = Str::after(VerificationUrlService::generate($user), 'verify/');
 
 		try {
-			Mail::to($user->email)->send(new EmailVerification($verificationUrl, $user->username));
+			Mail::to($user->email)->send(new EmailVerification($verificationToken, $user->username, $user->email));
 		} catch (\Exception $e) {
 			$user->delete();
 			return response()->json(['message' => __('email.sending_failed')], 500);

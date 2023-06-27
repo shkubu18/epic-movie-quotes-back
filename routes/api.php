@@ -31,7 +31,10 @@ Route::post('/register', [AuthController::class, 'register'])->name('register.cr
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 // email verification
-Route::get('/email/verify/{token}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
+Route::controller(EmailVerificationController::class)->prefix('email')->group(function () {
+	Route::get('verify/{token}/{hash}', 'verify')->name('verification.verify');
+	Route::post('resend/verify-email', 'resendVerificationEmail')->name('verification.resend');
+});
 
 // password reset
 Route::controller(ResetPasswordController::class)->prefix('password')->group(function () {
