@@ -39,7 +39,6 @@ Route::controller(EmailVerificationController::class)->prefix('email')->group(fu
 // password reset
 Route::controller(ResetPasswordController::class)->prefix('password')->group(function () {
 	Route::post('email', 'sendResetPasswordEmail')->name('password.email');
-	Route::get('reset/{token}', 'showResetPasswordForm')->name('password.reset');
 	Route::post('update', 'updatePassword')->name('password.update');
 });
 
