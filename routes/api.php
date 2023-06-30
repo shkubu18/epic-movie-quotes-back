@@ -47,6 +47,9 @@ Route::get('locale/{language}', [LanguageController::class, 'setLocale'])->name(
 
 Route::middleware('auth:sanctum')->group(function () {
 	Route::get('/user', [UserController::class, 'getUser'])->name('user');
+	Route::get('/authenticated', function () {
+		return true;
+	});
 
 	// logout
 	Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -58,6 +61,7 @@ Route::middleware('auth:sanctum')->group(function () {
 		Route::get('{movie}/edit', 'get')->name('movies.edit');
 		Route::post('{movie}', 'update')->name('movies.update');
 		Route::delete('/{movie}', 'destroy')->name('movies.destroy');
+		Route::get('search', 'searchMovies')->name('movies.search');
 	});
 
 	// genres
@@ -70,6 +74,7 @@ Route::middleware('auth:sanctum')->group(function () {
 		Route::get('{quote}/edit', 'get')->name('quotes.edit');
 		Route::post('{quote}', 'update')->name('quotes.update');
 		Route::delete('/{quote}', 'destroy')->name('quotes.destroy');
+		Route::get('search', 'searchQuotes')->name('quotes.search');
 	});
 
 	// comments
