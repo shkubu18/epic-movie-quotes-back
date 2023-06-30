@@ -23,11 +23,12 @@ class QuoteResource extends JsonResource
 				'release_date' => $this->movie->release_date,
 			],
 			'user'         => [
-				'name'    => $this->movie->user->username,
-				'picture' => $this->movie->user->profile_picture,
+				'name'            => $this->movie->user->username,
+				'profile_picture' => $this->when($this->movie->user->profile_picture, $this->movie->user->profile_picture),
 			],
-			'comments'       => $this->when($this->comments->isNotEmpty(), CommentResource::collection($this->comments)),
-			'total_likes'    => $this->when($this->likes->isNotEmpty(), $this->likes->count()),
+			'comments'          => $this->when($this->comments->isNotEmpty(), CommentResource::collection($this->comments)),
+			'total_likes'       => $this->when($this->likes->isNotEmpty(), $this->likes->count()),
+			'total_comments'    => $this->when($this->comments->isNotEmpty(), $this->comments->count()),
 		];
 	}
 }

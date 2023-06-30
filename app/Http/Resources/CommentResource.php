@@ -19,7 +19,7 @@ class CommentResource extends JsonResource
 			'body'            => $this->body,
 			'user'            => [
 				'username'        => $this->user->username,
-				'profile_picture' => $this->user->profile_picture,
+				'profile_picture' => $this->when($this->user->profile_picture, $this->user->profile_picture),
 			],
 		];
 	}
