@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Movies;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Movie\SearchMovieRequest;
 use App\Http\Requests\Movie\StoreMovieRequest;
 use App\Http\Requests\Movie\UpdateMovieRequest;
 use App\Http\Resources\MovieResource;
@@ -29,7 +30,7 @@ class MovieController extends Controller
 		try {
 			$movie = DB::transaction(function () use ($request) {
 				$movie = Movie::create([...$request->validated(),
-					'picture'  => request()->file('picture')->store('movies/pictures'),
+					'picture'  => request()->file('picture')->store('storage/movies/pictures'),
 				]);
 				return $movie;
 			});
@@ -56,7 +57,7 @@ class MovieController extends Controller
 		try {
 			DB::transaction(function () use ($request, $movie) {
 				$movie->update([...$request->validated(),
-					'picture'  => $request->hasFile('picture') ? request()->file('picture')->store('movies/pictures') : $movie->picture,
+					'picture'  => $request->hasFile('picture') ? request()->file('picture')->store('storage/movies/pictures') : $movie->picture,
 				]);
 				return $movie;
 			});
@@ -77,5 +78,12 @@ class MovieController extends Controller
 		$movie->delete();
 
 		return response()->json(['message' => 'movie deleted successfully'], 200);
+	}
+
+	public function searchMovies(SearchMovieRequest $request): array
+	{
+		$query = Movie::search($request->search)->with('user', 'genres', 'quotes')->get();
+
+		return ['movies' => MovieResource::collection($query)];
 	}
 }
