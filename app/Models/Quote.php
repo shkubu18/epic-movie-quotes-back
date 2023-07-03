@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Builder;
 use Spatie\Translatable\HasTranslations;
 
 class Quote extends Model
@@ -15,6 +16,12 @@ class Quote extends Model
 	protected $guarded = ['id'];
 
 	public $translatable = ['name'];
+
+	public static function scopeSearch(Builder $query, ?string $search): void
+	{
+		$query->where('name->en', 'like', '%' . $search . '%')
+			->orWhere('name->ka', 'like', '%' . $search . '%');
+	}
 
 	public function movie(): BelongsTo
 	{

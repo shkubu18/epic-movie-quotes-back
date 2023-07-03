@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Quotes;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Quote\SearchQuoteRequest;
 use App\Http\Requests\Quote\StoreQuoteRequest;
 use App\Http\Requests\Quote\UpdateQuoteRequest;
 use App\Http\Resources\QuoteResource;
@@ -13,7 +14,7 @@ class QuoteController extends Controller
 {
 	public function index(): array
 	{
-		$quotes = Quote::latest()->paginate(3);
+		$quotes = Quote::with('comments', 'likes', 'movie.user')->latest()->paginate(3);
 
 		return ['quotes' => QuoteResource::collection($quotes), 'last_page' => $quotes->lastPage()];
 	}
@@ -23,7 +24,7 @@ class QuoteController extends Controller
 		$this->authorize('create', [Quote::class, $request->movie_id]);
 
 		Quote::create([...$request->validated(),
-			'picture'  => request()->file('picture')->store('quotes/pictures'),
+			'picture'  => request()->file('picture')->store('storage/quotes/pictures'),
 		]);
 
 		return response()->json(['message' => 'quote created successfully'], 201);
@@ -41,7 +42,7 @@ class QuoteController extends Controller
 		$this->authorize('authorizeQuoteAccess', $quote);
 
 		$quote->update([...$request->validated(),
-			'picture'  => $request->hasFile('picture') ? request()->file('picture')->store('quotes/pictures') : $quote->picture,
+			'picture'  => $request->hasFile('picture') ? request()->file('picture')->store('storage/quotes/pictures') : $quote->picture,
 		]);
 
 		return response()->json(['message' => 'quote updated successfully']);
@@ -54,5 +55,12 @@ class QuoteController extends Controller
 		$quote->delete();
 
 		return response()->json(['message' => 'Quote deleted successfully']);
+	}
+
+	public function searchQuotes(SearchQuoteRequest $request): array
+	{
+		$query = Quote::search($request->search)->get();
+
+		return ['quotes' => QuoteResource::collection($query)];
 	}
 }
