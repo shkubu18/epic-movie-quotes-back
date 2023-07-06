@@ -12,7 +12,7 @@ return new class extends Migration {
 	{
 		Schema::create('notifications', function (Blueprint $table) {
 			$table->id();
-			$table->foreignId('quote_id')->references('id')->on('quotes');
+			$table->foreignId('quote_id')->constrained()->cascadeOnDelete();
 			$table->foreignId('receiver')->constrained()->cascadeOnDelete()->references('id')->on('users');
 			$table->foreignId('sender')->constrained()->cascadeOnDelete()->references('id')->on('users');
 			$table->string('type');
