@@ -36,10 +36,10 @@ class MovieFactory extends Factory
 				'ka' => \Faker\Factory::create('ka_GE')->name,
 			],
 			'description'      => [
-				'en' => \Faker\Factory::create('en_US')->paragraph,
-				'ka' => \Faker\Factory::create('ka_GE')->paragraph(3, true),
+				'en' => \Faker\Factory::create('en_US')->realText(100),
+				'ka' => \Faker\Factory::create('ka_GE')->realText(100),
 			],
-			'picture'       => 'storage/movies/pictures/' . basename($image),
+			'picture'       => 'movies/pictures/' . basename($image),
 		];
 	}
 }

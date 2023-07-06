@@ -16,7 +16,7 @@ class MovieController extends Controller
 {
 	public function index(): array|JsonResponse
 	{
-		$movies = Movie::where('user_id', Auth::user()->id)->latest()->get();
+		$movies = Movie::with('user', 'genres', 'quotes')->where('user_id', Auth::user()->id)->latest()->get();
 
 		if ($movies->isEmpty()) {
 			return response()->json(['message' => __('messages.movies_not_found')], 204);
@@ -28,9 +28,17 @@ class MovieController extends Controller
 	public function store(StoreMovieRequest $request): JsonResponse
 	{
 		try {
+			$existingMovie = Movie::where('user_id', auth()->user()->id)
+				->where('name->en', $request->name_en)->orWhere('name->ka', $request->name_ka)
+				->first();
+
+			if ($existingMovie) {
+				return response()->json(['message' => __('messages.movie_already_exists')], 422);
+			}
+
 			$movie = DB::transaction(function () use ($request) {
 				$movie = Movie::create([...$request->validated(),
-					'picture'  => request()->file('picture')->store('storage/movies/pictures'),
+					'picture'  => request()->file('picture')->store('movies/pictures'),
 				]);
 				return $movie;
 			});
@@ -57,7 +65,7 @@ class MovieController extends Controller
 		try {
 			DB::transaction(function () use ($request, $movie) {
 				$movie->update([...$request->validated(),
-					'picture'  => $request->hasFile('picture') ? request()->file('picture')->store('storage/movies/pictures') : $movie->picture,
+					'picture'  => $request->hasFile('picture') ? request()->file('picture')->store('movies/pictures') : $movie->picture,
 				]);
 				return $movie;
 			});

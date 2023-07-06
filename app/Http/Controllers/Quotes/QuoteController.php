@@ -24,7 +24,7 @@ class QuoteController extends Controller
 		$this->authorize('create', [Quote::class, $request->movie_id]);
 
 		Quote::create([...$request->validated(),
-			'picture'  => request()->file('picture')->store('storage/quotes/pictures'),
+			'picture'  => request()->file('picture')->store('quotes/pictures'),
 		]);
 
 		return response()->json(['message' => 'quote created successfully'], 201);
@@ -42,7 +42,7 @@ class QuoteController extends Controller
 		$this->authorize('authorizeQuoteAccess', $quote);
 
 		$quote->update([...$request->validated(),
-			'picture'  => $request->hasFile('picture') ? request()->file('picture')->store('storage/quotes/pictures') : $quote->picture,
+			'picture'  => $request->hasFile('picture') ? request()->file('picture')->store('quotes/pictures') : $quote->picture,
 		]);
 
 		return response()->json(['message' => 'quote updated successfully']);
