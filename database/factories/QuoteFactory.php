@@ -30,7 +30,7 @@ class QuoteFactory extends Factory
 				'ka' => \Faker\Factory::create('ka_GE')->realText(30),
 			],
 			'movie_id'      => fake()->numberBetween(1, 10),
-			'picture'       => 'storage/quotes/pictures/' . basename($image),
+			'picture'       => 'quotes/pictures/' . basename($image),
 		];
 	}
 }
