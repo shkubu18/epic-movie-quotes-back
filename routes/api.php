@@ -61,7 +61,6 @@ Route::middleware('auth:sanctum')->group(function () {
 		Route::get('{movie}', 'get')->name('movies.get');
 		Route::post('{movie}', 'update')->name('movies.update');
 		Route::delete('/{movie}', 'destroy')->name('movies.destroy');
-		Route::get('search', 'searchMovies')->name('movies.search');
 	});
 
 	// genres
