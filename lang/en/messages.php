@@ -7,4 +7,5 @@ return [
 	'movie_access'           => "You don't own this movie.",
 	'quote_access'           => "You don't own this quote.",
 	'movie_already_exists'   => 'You have already added a movie with a similar name, try adding another movie.',
+	'quote_already_exists'   => 'You already added this quote, try adding another quote.',
 ];
