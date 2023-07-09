@@ -14,7 +14,7 @@ class QuoteController extends Controller
 {
 	public function index(): array
 	{
-		$quotes = Quote::with('comments', 'likes', 'movie.user')->latest()->paginate(3);
+		$quotes = Quote::with('comments', 'likes', 'movie.user')->orderBy('id', 'desc')->paginate(3);
 
 		return ['quotes' => QuoteResource::collection($quotes), 'last_page' => $quotes->lastPage()];
 	}
