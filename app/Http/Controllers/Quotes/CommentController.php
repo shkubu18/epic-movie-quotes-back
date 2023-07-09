@@ -17,6 +17,6 @@ class CommentController extends Controller
 
 		NotificationService::addNotification($request, 'comment');
 
-		return response()->json(['message' => 'comment added successfully']);
+		return response()->json(['message' => 'comment added successfully'], 201);
 	}
 }
