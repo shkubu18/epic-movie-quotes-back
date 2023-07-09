@@ -23,6 +23,7 @@ class QuoteResource extends JsonResource
 				'release_date' => $this->movie->release_date,
 			],
 			'user'         => [
+				'id'              => $this->movie->user->id,
 				'name'            => $this->movie->user->username,
 				'profile_picture' => $this->when($this->movie->user->profile_picture, $this->movie->user->profile_picture),
 			],
