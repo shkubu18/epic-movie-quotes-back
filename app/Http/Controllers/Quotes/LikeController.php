@@ -9,6 +9,7 @@ use App\Http\Requests\Like\LikeRequest;
 use App\Models\Like;
 use App\Services\NotificationService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
 {
@@ -30,10 +31,17 @@ class LikeController extends Controller
 
 		NotificationService::addNotification($request, 'like');
 
-		$like = ['quote_id' => (int)$request->quote_id];
+		$like = ['quote_id' => (int)$request->quote_id, 'sender' => Auth::user()->username];
 
 		event(new LikeAdded($like));
 
-		return response()->json(['message' => 'like added successfully']);
+		return response()->json(['message' => 'like added successfully'], 201);
+	}
+
+	public function getLikedQuotes()
+	{
+		$likedQuotes = Auth::user()->likes()->pluck('quote_id')->toArray();
+
+		return response()->json(['liked_quotes' => $likedQuotes]);
 	}
 }
