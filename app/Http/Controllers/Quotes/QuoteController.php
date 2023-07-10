@@ -23,6 +23,14 @@ class QuoteController extends Controller
 	{
 		$this->authorize('create', [Quote::class, $request->movie_id]);
 
+		$existingQuote = Quote::where('name->en', $request->name_en)->orWhere('name->ka', $request->name_ka)
+			->where('movie_id', $request->movie_id)
+			->first();
+
+		if ($existingQuote) {
+			return response()->json(['message' => __('messages.quote_already_exists')]);
+		}
+
 		Quote::create([...$request->validated(),
 			'picture'  => request()->file('picture')->store('quotes/pictures'),
 		]);

@@ -70,7 +70,7 @@ Route::middleware('auth:sanctum')->group(function () {
 	Route::controller(QuoteController::class)->prefix('quotes')->group(function () {
 		Route::get('/', 'index')->name('quotes.index');
 		Route::post('/', 'store')->name('quotes.store');
-		Route::get('{quote}/edit', 'get')->name('quotes.edit');
+		Route::get('{quote}', 'get')->name('quotes.get');
 		Route::post('{quote}', 'update')->name('quotes.update');
 		Route::delete('/{quote}', 'destroy')->name('quotes.destroy');
 		Route::get('search', 'searchQuotes')->name('quotes.search');
