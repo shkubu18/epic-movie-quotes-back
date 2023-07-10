@@ -90,5 +90,6 @@ Route::middleware('auth:sanctum')->group(function () {
 		Route::get('/', 'index')->name('notifications.index');
 		Route::post('/{notification}/mark-as-read', 'markAsRead')->name('notifications.mark_as_read');
 		Route::delete('/{notification}', 'destroy')->name('notifications.destroy');
+		Route::get('/mark-all-as-read', 'markAllAsRead')->name('notifications.mark_all_as_read');
 	});
 });
