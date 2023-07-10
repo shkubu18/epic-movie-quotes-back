@@ -24,20 +24,23 @@ class NotificationService
 			'type'       => $notificationType,
 		]);
 
-		$senderUser = User::where('id', $newNotification->sender)->first();
+		if ($receiverUserId !== $request->user_id) {
+			$senderUser = User::where('id', $newNotification->sender)->first();
 
-		$notification = (object)[
-			'id'         => $newNotification->id,
-			'quote_id'   => $request->quote_id,
-			'receiver'   => $newNotification->receiver,
-			'type'       => $newNotification->type,
-			'read'       => false,
-			'sender'     => [
-				'username'        => $senderUser->username,
-				'profile_picture' => $senderUser->profile_picture,
-			],
-		];
+			$notification = (object)[
+				'id'         => $newNotification->id,
+				'quote_id'   => $request->quote_id,
+				'receiver'   => $newNotification->receiver,
+				'type'       => $newNotification->type,
+				'read'       => false,
+				'sender'     => [
+					'username'        => $senderUser->username,
+					'profile_picture' => $senderUser->profile_picture,
+				],
+				'created_at' => $newNotification->created_at,
+			];
 
-		event(new NotificationAdded($notification));
+			event(new NotificationAdded($notification));
+		}
 	}
 }

@@ -44,6 +44,7 @@ class NotificationAdded implements ShouldBroadcast
 			'type'       => $this->notification->type,
 			'read'       => $this->notification->read,
 			'sender'     => $this->notification->sender,
+			'created_at' => $this->notification->created_at,
 		];
 	}
 }
