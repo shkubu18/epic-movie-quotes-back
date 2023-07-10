@@ -17,6 +17,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
 	use Notifiable;
 
+	public function likes()
+	{
+		return $this->hasMany(Like::class);
+	}
+
 	public function movies(): HasMany
 	{
 		return $this->hasMany(Movie::class);

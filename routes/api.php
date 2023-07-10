@@ -80,7 +80,10 @@ Route::middleware('auth:sanctum')->group(function () {
 	Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 
 	// likes
-	Route::post('/likes', [LikeController::class, 'like'])->name('like');
+	Route::controller(LikeController::class)->prefix('likes')->group(function () {
+		Route::post('/', 'like')->name('like');
+		Route::get('/quotes', 'getLikedQuotes')->name('like.quotes');
+	});
 
 	// notifications
 	Route::controller(NotificationController::class)->prefix('notifications')->group(function () {
