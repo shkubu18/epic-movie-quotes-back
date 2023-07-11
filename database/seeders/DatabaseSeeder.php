@@ -5,10 +5,8 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Comment;
 use App\Models\Genre;
-use App\Models\Like;
 use App\Models\Movie;
 use App\Models\MovieGenre;
-use App\Models\Notification;
 use App\Models\Quote;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -26,8 +24,6 @@ class DatabaseSeeder extends Seeder
 		MovieGenre::factory(15)->create();
 		Quote::factory(15)->create();
 		Comment::factory(20)->create();
-		Like::factory(15)->create();
-		Notification::factory(10)->create();
 
 		// \App\Models\User::factory()->create([
 		//     'name' => 'Test User',

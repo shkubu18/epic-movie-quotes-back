@@ -22,8 +22,9 @@ class NotificationResource extends JsonResource
 				'username'        => $this->senderUser->username,
 				'profile_picture' => $this->senderUser->profile_picture,
 			],
-			'type' => $this->type,
-			'read' => $this->read,
+			'type'       => $this->type,
+			'read'       => $this->read,
+			'created_at' => $this->created_at,
 		];
 	}
 }
