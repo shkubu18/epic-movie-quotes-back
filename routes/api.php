@@ -46,9 +46,16 @@ Route::controller(ResetPasswordController::class)->prefix('password')->group(fun
 Route::get('locale/{language}', [LanguageController::class, 'setLocale'])->name('locale');
 
 Route::middleware('auth:sanctum')->group(function () {
-	Route::get('/user', [UserController::class, 'getUser'])->name('user');
 	Route::get('/authenticated', function () {
 		return true;
+	});
+
+	Route::get('/email/update/{token}/{hash}', [EmailVerificationController::class, 'updateUserEmail'])->name('email.update');
+
+	// users
+	Route::controller(UserController::class)->prefix('users')->group(function () {
+		Route::get('/user', 'getUser')->name('users.get');
+		Route::post('/{user}', 'update')->name('users.update');
 	});
 
 	// logout
