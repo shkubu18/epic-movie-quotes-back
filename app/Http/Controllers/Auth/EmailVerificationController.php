@@ -47,4 +47,28 @@ class EmailVerificationController extends Controller
 
 		return response()->json(['message' => 'email verification link sent successfully']);
 	}
+
+	public function updateUserEmail(string $token, Request $request)
+	{
+		$expirationDateTime = Carbon::createFromTimestamp($request->query('expires'));
+
+		if ($expirationDateTime->isPast()) {
+			return response()->json(['message' => 'email verification link is expired'], 403);
+		}
+
+		try {
+			$user = User::where('temporary_email_verification_token', $token)->firstOrFail();
+
+			$user->update([
+				'email'                              => $user->temporary_email,
+				'email_verified_at'                  => now(),
+				'temporary_email'                    => null,
+				'temporary_email_verification_token' => null,
+			]);
+
+			return response()->json(['message' => 'email updated successfully']);
+		} catch (\Exception) {
+			return response()->json(['message' => 'email is already updated'], 403);
+		}
+	}
 }
