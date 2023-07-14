@@ -19,4 +19,16 @@ class VerificationUrlService
 			]
 		);
 	}
+
+	public static function generateForNewEmail(User $user): string
+	{
+		return URL::temporarySignedRoute(
+			'email.update',
+			Carbon::now()->addMinutes(60),
+			[
+				'token' => $user->temporary_email_verification_token,
+				'hash'  => sha1($user->getEmailForVerification()),
+			]
+		);
+	}
 }

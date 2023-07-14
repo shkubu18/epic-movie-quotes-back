@@ -18,12 +18,14 @@ class UserFactory extends Factory
 	public function definition(): array
 	{
 		return [
-			'username'                 => fake()->name(),
-			'email'                    => fake()->unique()->safeEmail(),
-			'email_verification_token' => Str::uuid()->toString(),
-			'email_verified_at'        => now(),
-			'password'                 => 'password', // The password will be automatically hashed via the users setPasswordAttribute method
-			'remember_token'           => Str::random(10),
+			'username'                           => fake()->name(),
+			'email'                              => fake()->unique()->safeEmail(),
+			'email_verification_token'           => Str::uuid()->toString(),
+			'temporary_email'                    => null,
+			'temporary_email_verification_token' => null,
+			'email_verified_at'                  => now(),
+			'password'                           => 'password', // The password will be automatically hashed via the users setPasswordAttribute method
+			'remember_token'                     => Str::random(10),
 		];
 	}
 

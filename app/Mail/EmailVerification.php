@@ -10,7 +10,7 @@ class EmailVerification extends Mailable
 {
 	use Queueable, SerializesModels;
 
-	public function __construct(public string $verificationToken, public string $username, public string $userEmail)
+	public function __construct(public string $verificationToken, public string $username, public string $userEmail, public ?string $type = null)
 	{
 	}
 
