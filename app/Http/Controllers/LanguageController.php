@@ -15,4 +15,9 @@ class LanguageController extends Controller
 
 		return response()->json(['message' => 'locale changed successfully', 'locale' => App::getLocale()]);
 	}
+
+	public function getLocale(): JsonResponse
+	{
+		return response()->json(['locale' => App::getLocale()]);
+	}
 }
