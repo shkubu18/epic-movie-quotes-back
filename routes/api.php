@@ -43,7 +43,10 @@ Route::controller(ResetPasswordController::class)->prefix('password')->group(fun
 });
 
 // language
-Route::get('locale/{language}', [LanguageController::class, 'setLocale'])->name('locale');
+Route::controller(LanguageController::class)->prefix('locale')->group(function () {
+	Route::get('{language}', 'setLocale')->name('locale.set');
+	Route::get('/', 'getLocale')->name('locale.get');
+});
 
 Route::middleware('auth:sanctum')->group(function () {
 	Route::get('/authenticated', function () {

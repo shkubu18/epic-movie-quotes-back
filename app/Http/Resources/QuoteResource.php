@@ -19,7 +19,7 @@ class QuoteResource extends JsonResource
 			'name'     => ['en' => $this->getTranslation('name', 'en'), 'ka' => $this->getTranslation('name', 'ka')],
 			'picture'  => $this->picture,
 			'movie'    => [
-				'name'         => $this->movie->name,
+				'name'         => ['en' => $this->getTranslation('name', 'en'), 'ka' => $this->getTranslation('name', 'ka')],
 				'release_date' => $this->movie->release_date,
 			],
 			'user'         => [
