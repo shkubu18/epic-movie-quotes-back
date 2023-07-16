@@ -32,6 +32,7 @@ Users can explore and interact with the application in their preferred language.
 * [Development](#development)
 * [Database Structure](#database-structure)
 * [Resources](#resources)
+* [Additional information](#additional-information)
 * [Live Deployment](#live-deployment)
 
 
@@ -153,6 +154,9 @@ php artisan serve
 
 https://epic-movie-quotes.data-shkubuliani.redberryinternship.ge/
 
+#
+## Additional information
+#### This project is inspired by [Redberry](https://redberry.international/)
 
 #
 ## Resources
