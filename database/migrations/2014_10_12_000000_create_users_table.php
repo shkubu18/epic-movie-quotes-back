@@ -18,7 +18,7 @@ return new class() extends Migration {
 			$table->string('temporary_email')->nullable();
 			$table->string('temporary_email_verification_token')->unique()->nullable();
 			$table->timestamp('email_verified_at')->nullable();
-			$table->string('password')->nullable();
+			$table->string('password');
 			$table->string('profile_picture')->nullable();
 			$table->string('google_id')->unique()->nullable();
 			$table->rememberToken();
