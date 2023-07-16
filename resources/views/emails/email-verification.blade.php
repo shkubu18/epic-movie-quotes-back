@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Quotes</title>
 </head>
-<body style=" background: linear-gradient(187.16deg, #181623 0.07%, #191725 51.65%, #0D0B14 98.75%); margin: 0; padding: 0; min-height: 100vh; font-family: Arial, sans-serif; font-size: 16px; font-weight: 200;">
+<body style=" background-color: #181623; margin: 0; padding: 0; min-height: 100vh; font-family: Arial, sans-serif; font-size: 16px; font-weight: 200;">
 <table align="center" style="max-width: 1250px; min-width: 300px; padding: 80px 20px 0 20px;; height: 100%; color: white">
     <thead>
     <tr>
