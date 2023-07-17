@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\AuthGoogleController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\LanguageController;
@@ -30,6 +31,12 @@ Route::post('/register', [AuthController::class, 'register'])->name('register.cr
 // authorization
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
+// auth with Google
+Route::controller(AuthGoogleController::class)->prefix('oauth/google')->group(function () {
+	Route::get('redirect', 'redirect')->name('google.redirect');
+	Route::get('callback', 'callback')->name('google.callback');
+});
+
 // email verification
 Route::controller(EmailVerificationController::class)->prefix('email')->group(function () {
 	Route::get('verify/{token}/{hash}', 'verify')->name('verification.verify');
@@ -57,7 +64,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 	// users
 	Route::controller(UserController::class)->prefix('users')->group(function () {
-		Route::get('/user', 'getUser')->name('users.get');
+		Route::get('/user', 'get')->name('users.get');
 		Route::post('/{user}', 'update')->name('users.update');
 	});
 
@@ -80,10 +87,10 @@ Route::middleware('auth:sanctum')->group(function () {
 	Route::controller(QuoteController::class)->prefix('quotes')->group(function () {
 		Route::get('/', 'index')->name('quotes.index');
 		Route::post('/', 'store')->name('quotes.store');
-		Route::get('{quote}/get', 'get')->name('quotes.get');
+		Route::get('search', 'searchQuotes')->name('quotes.search');
+		Route::get('{quote}', 'get')->name('quotes.get');
 		Route::post('{quote}', 'update')->name('quotes.update');
 		Route::delete('/{quote}', 'destroy')->name('quotes.destroy');
-		Route::get('search', 'searchQuotes')->name('quotes.search');
 	});
 
 	// comments
