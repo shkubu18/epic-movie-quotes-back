@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
-	public function getUser(Request $request)
+	public function get(Request $request)
 	{
 		return ['user'  => UserResource::make($request->user())];
 	}
