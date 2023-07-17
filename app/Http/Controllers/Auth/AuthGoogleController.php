@@ -10,22 +10,26 @@ use Laravel\Socialite\Facades\Socialite;
 
 class AuthGoogleController extends Controller
 {
-	public function redirectToGoogleProvider(): RedirectResponse
+	public function redirect(): RedirectResponse
 	{
-		return Socialite::driver('google')->stateless()->redirect();
+		return Socialite::driver('google')->redirect();
 	}
 
-	public function handleCallback(): RedirectResponse
+	public function callback(): RedirectResponse
 	{
 		try {
-			$googleUser = Socialite::driver('google')->stateless()->user();
+			$googleUser = Socialite::driver('google')->user();
 		} catch (\Exception $exception) {
 			return redirect(env('FRONTEND_URL'));
 		}
 
-		$existingUser = User::where('google_id', $googleUser->id)->first();
+		$existingUser = User::where('username', $googleUser->name)->first();
 
 		if ($existingUser) {
+			if ($existingUser->email !== $googleUser->email) {
+				$existingUser->update(['email' => $googleUser->email]);
+			}
+
 			Auth::login($existingUser, true);
 		} else {
 			$newUser = User::create([
@@ -38,6 +42,6 @@ class AuthGoogleController extends Controller
 			Auth::login($newUser, true);
 		}
 
-		return redirect(env('FRONTEND_URL') . '/newsfeed');
+		return redirect(env('FRONTEND_NEWSFEED_URL'));
 	}
 }
