@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Quotes;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Quote\SearchQuoteRequest;
 use App\Http\Requests\Quote\StoreQuoteRequest;
 use App\Http\Requests\Quote\UpdateQuoteRequest;
