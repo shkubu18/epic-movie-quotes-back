@@ -49,7 +49,6 @@ Users can explore and interact with the application in their preferred language.
 
 ## Tech Stack
 - <img src="public/readme/assets/laravel.png" height="18" style="position: relative; top: 5px" />&nbsp;[Laravel@10.x](https://laravel.com/docs/10.x) - back-end framework
-- <img src="public/readme/assets/tailwind.png" height="18" style="position: relative; top: 5px" />&nbsp;[TailwindCSS](https://tailwindcss.com/) - css framework for styles
 - <img src="public/readme/assets/spatie.png" height="19" style="position: relative; top: 4px" />&nbsp;[Spatie Translatable](https://github.com/spatie/laravel-translatable) - package for translation
 - <img src="public/readme/assets/pusher.jpg" height="19" style="position: relative; top: 4px" />&nbsp;[Laravel Pusher](https://swagger.io/docs/open-source-tools/swagger-ui/usage/installation/) - package for live notifications
 
