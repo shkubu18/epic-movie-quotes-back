@@ -16,7 +16,7 @@ class CommentAdded implements ShouldBroadcast
 	/**
 	 * Create a new event instance.
 	 */
-	public function __construct(public string $comment)
+	public function __construct(public object $comment)
 	{
 	}
 
