@@ -6,6 +6,7 @@ use App\Events\Likes\LikeAdded;
 use App\Events\Likes\LikeRemoved;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Like\LikeRequest;
+use App\Http\Resources\LikeResource;
 use App\Models\Like;
 use App\Models\Movie;
 use App\Models\Quote;
@@ -45,10 +46,10 @@ class LikeController extends Controller
 		return response()->json(['message' => 'like added successfully'], 201);
 	}
 
-	public function getLikedQuotes()
+	public function getLikedQuotes(): JsonResponse
 	{
 		$likedQuotes = Auth::user()->likes()->pluck('quote_id')->toArray();
 
-		return response()->json(['liked_quotes' => $likedQuotes]);
+		return response()->json(LikeResource::make($likedQuotes));
 	}
 }
