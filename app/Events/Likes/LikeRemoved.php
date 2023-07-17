@@ -48,7 +48,7 @@ class LikeRemoved implements ShouldBroadcast
 			->where('sender', $this->removedLike->user_id)
 			->where('type', 'like')->first();
 
-		$senderUser = User::where('id', $notification->sender)->first();
+		$senderUser = User::where('id', $this->removedLike->user_id)->first();
 
 		$broadcastData = [
 			'quote_id'    => (int)$this->removedLike->quote_id,
