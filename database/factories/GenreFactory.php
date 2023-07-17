@@ -10,14 +10,45 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class GenreFactory extends Factory
 {
 	/**
+	 * The available genre names.
+	 *
+	 * @var array
+	 */
+	protected $genres = [
+		'Action',
+		'Comedy',
+		'Drama',
+		'Horror',
+		'Romance',
+		'Thriller',
+		'Sci-Fi',
+		'Fantasy',
+		'Mystery',
+		'Adventure',
+	];
+
+	/**
 	 * Define the model's default state.
 	 *
-	 * @return array<string, mixed>
+	 * @return array
 	 */
-	public function definition(): array
+	public function definition()
 	{
 		return [
-			'name' => fake()->word,
+			'name' => $this->uniqueGenreName(),
 		];
+	}
+
+	protected function uniqueGenreName(): string
+	{
+		$genre = $this->faker->randomElement($this->genres);
+		$this->removeGenreName($genre);
+
+		return $genre;
+	}
+
+	protected function removeGenreName($name): void
+	{
+		$this->genres = array_diff($this->genres, [$name]);
 	}
 }
