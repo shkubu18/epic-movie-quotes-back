@@ -71,7 +71,7 @@ class MovieController extends Controller
 			$movie->genres()->detach();
 			$movie->genres()->attach($request->genres, ['created_at' => now(), 'updated_at' => now()]);
 
-			return response()->json(['message' => 'movie updated successfully'], 200);
+			return response()->json(['message' => 'movie updated successfully']);
 		} catch (\Exception $e) {
 			return response()->json(['message' => __('messages.failed_to_update_movie')], 500);
 		}
