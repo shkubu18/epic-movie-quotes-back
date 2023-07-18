@@ -12,6 +12,11 @@ class Notification extends Model
 
 	protected $guarded = ['id'];
 
+	public function receiverUser(): BelongsTo
+	{
+		return $this->belongsTo(User::class, 'receiver');
+	}
+
 	public function senderUser(): BelongsTo
 	{
 		return $this->belongsTo(User::class, 'sender');

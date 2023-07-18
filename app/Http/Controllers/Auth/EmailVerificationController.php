@@ -4,20 +4,22 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\ResendVerificationEmailRequest;
+use App\Http\Requests\Email\EmailVerificationRequest;
+use App\Http\Requests\Email\UpdateUserEmailRequest;
 use App\Mail\EmailVerification;
 use App\Models\User;
 use App\Services\VerificationUrlService;
 use Illuminate\Auth\Events\Verified;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class EmailVerificationController extends Controller
 {
-	public function verify(string $token, Request $request)
+	public function verify(EmailVerificationRequest $request, string $token): JsonResponse
 	{
-		$expirationDateTime = Carbon::createFromTimestamp($request->query('expires'));
+		$expirationDateTime = Carbon::createFromTimestamp($request->expires);
 
 		try {
 			if ($expirationDateTime->isPast()) {
@@ -32,7 +34,7 @@ class EmailVerificationController extends Controller
 		}
 	}
 
-	public function resendVerificationEmail(ResendVerificationEmailRequest $request)
+	public function resendVerificationEmail(ResendVerificationEmailRequest $request): JsonResponse
 	{
 		$user = User::where('email', $request->email)->first();
 
@@ -48,9 +50,9 @@ class EmailVerificationController extends Controller
 		return response()->json(['message' => 'email verification link sent successfully']);
 	}
 
-	public function updateUserEmail(string $token, Request $request)
+	public function updateUserEmail(UpdateUserEmailRequest $request, string $token): JsonResponse
 	{
-		$expirationDateTime = Carbon::createFromTimestamp($request->query('expires'));
+		$expirationDateTime = Carbon::createFromTimestamp($request->expires);
 
 		if ($expirationDateTime->isPast()) {
 			return response()->json(['message' => 'email verification link is expired'], 403);

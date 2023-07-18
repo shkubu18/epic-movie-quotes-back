@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Movies;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Movie\StoreMovieRequest;
 use App\Http\Requests\Movie\UpdateMovieRequest;
 use App\Http\Resources\MovieResource;
@@ -72,7 +71,7 @@ class MovieController extends Controller
 			$movie->genres()->detach();
 			$movie->genres()->attach($request->genres, ['created_at' => now(), 'updated_at' => now()]);
 
-			return response()->json(['message' => 'movie updated successfully'], 200);
+			return response()->json(['message' => 'movie updated successfully']);
 		} catch (\Exception $e) {
 			return response()->json(['message' => __('messages.failed_to_update_movie')], 500);
 		}
@@ -84,6 +83,6 @@ class MovieController extends Controller
 
 		$movie->delete();
 
-		return response()->json(['message' => 'movie deleted successfully'], 200);
+		return response()->json(['message' => 'movie deleted successfully']);
 	}
 }

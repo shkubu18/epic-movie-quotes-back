@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Quotes;
+namespace App\Http\Controllers;
 
 use App\Events\CommentAdded;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Comment\StoreCommentRequest;
 use App\Models\Comment;
 use App\Models\Movie;

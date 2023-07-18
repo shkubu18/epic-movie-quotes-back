@@ -8,15 +8,14 @@ use App\Mail\EmailVerification;
 use App\Models\User;
 use App\Services\VerificationUrlService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
-	public function getUser(Request $request)
+	public function get(): array
 	{
-		return ['user'  => UserResource::make($request->user())];
+		return ['user'  => UserResource::make(auth()->user())];
 	}
 
 	public function update(UpdateUserRequest $request, User $user): JsonResponse

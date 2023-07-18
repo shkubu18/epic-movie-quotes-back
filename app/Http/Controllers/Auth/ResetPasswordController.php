@@ -40,7 +40,7 @@ class ResetPasswordController extends Controller
 			return response()->json(['message' => __('password.sending_failed')], 500);
 		}
 
-		return response()->json(['message' => 'email sent successfully'], 200);
+		return response()->json(['message' => 'email sent successfully']);
 	}
 
 	public function updatePassword(ResetPasswordUpdateRequest $request): JsonResponse

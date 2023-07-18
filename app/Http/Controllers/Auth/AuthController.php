@@ -42,7 +42,7 @@ class AuthController extends Controller
 	{
 		Auth::guard('web')->logout();
 
-		return response()->json(['message' => 'logout successfully'], 200);
+		return response()->json(['message' => 'logout successfully']);
 	}
 
 	public function register(RegistrationRequest $request): JsonResponse

@@ -10,7 +10,7 @@ return new class extends Migration {
 	 */
 	public function up(): void
 	{
-		Schema::create('movie_genres', function (Blueprint $table) {
+		Schema::create('genre_movies', function (Blueprint $table) {
 			$table->id();
 			$table->smallInteger('genre_id')->unsigned();
 			$table->smallInteger('movie_id')->unsigned();
@@ -23,6 +23,6 @@ return new class extends Migration {
 	 */
 	public function down(): void
 	{
-		Schema::dropIfExists('movie_genres');
+		Schema::dropIfExists('genre_movies');
 	}
 };
