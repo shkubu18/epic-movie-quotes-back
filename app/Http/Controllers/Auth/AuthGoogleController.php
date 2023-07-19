@@ -23,7 +23,8 @@ class AuthGoogleController extends Controller
 			return redirect(env('FRONTEND_URL'));
 		}
 
-		$existingUser = User::where('username', $googleUser->name)->first();
+		$existingUser = User::where('username', $googleUser->name)
+			->orWhere('google_id', $googleUser->id)->first();
 
 		if ($existingUser) {
 			if ($existingUser->email !== $googleUser->email) {
